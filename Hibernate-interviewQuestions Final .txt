@@ -1,0 +1,224 @@
+1)What is hibernate ?
+-it is a framework which is used to connect oops lang application to rdbms
+-ORM
+
+2)Adv of hibernate over jdbc?
+-works on object
+-Automatic query generation
+-Reducing boiler plate code
+-Independent on db
+-Exception handling
+
+3)What is dialect,hbm2ddl,show_sql?
+-Dialect-Which type of query to create datatypes change
+-hbm2ddl-hbm to ddl automatically
+-show_sql-just print query on console
+
+4)what is Driver ?
+-bridge between java app and db
+-4 types of driver
+-thin,jdbc-odbc,native,network protocol
+
+5)Session-Factory
+-Core interface on hibernate
+-used to create connection between java app and db
+-used create instance of session
+
+6)What is session?
+-it ia mediator between java app and db
+-interface
+-it provides multiple methods to perform oprtaions
+
+7)how can we create instance of session?
+-openSession() and getCurrentSession()
+-openSession() always return new instance of session
+-getCurrentSession() it checks if any session is open then taht session if not then new instance of session
+-for getCurrentSession() we need to provide one property current_session_class
+
+8)What is annnotations?
+-provide additional info to jvm
+
+9)@Entity
+-present in javax.persitance
+-class level annotation
+-used to map java class to db table
+
+10)@Table
+-custom table name
+
+11)@Id
+-to declare primary key
+
+12)@Column
+-custom column name
+
+13)@GeneratedValue
+-to generate id automatically
+-adding auto_increamet constraint
+
+14)diff between statergy auto and indintity
+-auto is for maintain sequence in multiple table
+-indentity is for single table sequence maintain
+
+15)Diff between save and persist
+-to insert the object in db table
+-save returns serlisable int (id)
+-persist returns void
+
+16)diff betwn save and saveOrUpdate
+-save always create new row in table
+-saveOrUpadte create new row if data not present if present then upadte
+
+17)Diff betn get and load
+-to fetch data by using id
+-get returns actual data while load return proxy
+-get returns null if id is not present but load methods thow ObjectNotFoundEXception
+-get supports egar loading nad load support lazy loading
+-if we are not sure id is presnt in db or not then we go fro get
+- if we are sure then we go for load
+
+18)What is dirty checking?
+-Unwantted checking of columns while inserting or upating data by hibernate
+
+19)how to avoid dirty checking
+-by using annotations @DynamicInsert and @DynamicUpdate on entity class
+
+20)What is mapping?
+-providing relation between to calsses and acuaring same realtion in rdbms by using mapping annotations
+
+21)@OneToOne
+-one enity associated with another one entity
+-One person has one adhar card
+
+22)What is cascading
+-if we perform some operation on target entity it gets reflected on child in cascading
+
+23)type of cascading
+
+24)@OneToMany
+--one enity associated with another Many entity
+-One company multiple employees
+
+25)What happens if we don't provide no-args constructor in entity class?
+-ibernate uses Instance class getConstructor() it requires no args construstor
+-if we don't provide it will show InstanstiaionException
+
+26)How hibernate handle the exception throws from jdbc steps?
+-it convert the compile time exception into runtime exception
+-SQLException --- HibernateException
+
+
+27)Hbm2ddl_auto "update","create" diff 
+-Hbm2ddl_auto is used to perform ddl operation auyomatically
+-create - always create new table drop if exists
+-update - update table if exist oyherwise create new
+
+28)What is caching?
+-it is an mechanism of pooling of an object
+-aplliaction performance will increase
+
+29)Diff between 1st level and  second level cache?
+-1st - at session level,on by default,clear() / evict()
+-2nd - at Sessionfactory,vendors EhCache,evict() and evictAll()
+
+
+30)diff between clear and evict method
+-clear -- to remove all cache from session
+-evict -- to remove particular obj cache from session
+
+31)how to clear second level cache
+-first getCahche() from sf
+-Cache has methods like evict() and evictAll()
+
+
+32)annotation for cache and concurrency stagies
+-@Cache
+-READ_ONLY
+-READ_WRITE
+-TRANSTIONAL
+
+33)vendors for 2nd cache
+-EhCache
+-JBoss
+
+34)What is HQL
+-Hibernate Query Lang
+-Independent on db
+-extension of SQL
+-Works on class and variables
+
+35)Why we use HQL
+-to perform complex query or custom query that we can't use with session method
+
+36)diff HQL and SQL
+-Hql is extension of SQL
+-HQL works on class/oops lanf where SQL works on table/db
+-HQL supported by ever db through hibernate but SQL supported only in MySQL
+-HQL is faster than SQL
+
+37)Why we use NamedQuery
+-Beacuse of HQL code becomes unreadableor complixity increases
+-to avoid that we declear query on entity class using this annotation
+-providing a simple name to query and calling will increase code readiablity and performce
+
+38)Why we use NamedNativeQuery
+-Beacuse of HQL code becomes unreadableor complixity increases
+-to avoid that we declear query on entity class using this annotation
+-providing a simple name to query and calling will increase code readiablity and performce
+-in case this native is query is supported 
+-native means speacific db type
+
+39)what is use of Criteria Api
+-beacause of writing query it makes tha program dependent on query lang
+-we need to use or create custom or complex query by using some methods
+-so for that hibernate provided Criteria API
+-using this we can custom qurey with help of builder methods
+
+40)N+1 problem
+-it nothing but performancr issue in hibernate 
+where if we tried get all details from one table related to another table with @OneToMany or @ManyToMany relation in that case it fires 1 query for first and N query for child table
+-so it makes N+1 query for sinle operation
+-it makes app slower
+-to avoid it ""
+
+41)Egar and lazy Loading
+-Egar - fetching associcated deatils withod calling it
+-Lazy - faecthing deatils whenever required
+
+-OneToOne  -Egar
+-OneToMany -Lazy
+-ManyToOne -Egar
+-ManyToMany-Lazy
+
+42)States of obj in Hibernate
+-Trasient- when we create an obj which is independent on db or not present in db
+-Persistent-an obj which present in db or session and java app
+-detached - an obj not present in session but present in db and present in java app
+
+Trasient --- save,upadte,saveOrUpdate,persist -- Persistent --- clear,evict,evictAll,close,detach -- detached
+
+detached --- merge,save,upadte,saveOrUpdate,persist --- persitent --- delete -- tarsient
+
+43)Can we make entity class final
+-no we can't
+-hibernate inheritate the entity to to get its properties
+-so we can't make entity class final
+
+44)What is pegination
+-restricting data fetching
+-using fetchSize()
+-setMaxResult()
+
+45)SingleTable Stargey
+-in case of inheritance the parent and child data stored in single table using @Discriminator column brtn them
+
+46)TablePerClass stargey
+-in case of inheritance the parent and child data stored in table per class
+
+47)SQL injection attack
+-when we use hibernate predefined methods there is a chance of data breaching
+-that is called SQL injection attack
+-we can go criteriaor we can go for validition
+
+48)
+
